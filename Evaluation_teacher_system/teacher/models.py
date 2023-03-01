@@ -30,13 +30,29 @@ class TeacherManager(models.Manager):
         return queryset
 
     def getTeacher(self, teacher_id):
-        queryset = list(Teacher.objects.filter(teacher_id=1).values())
+        queryset = list(Teacher.objects.filter(teacher_id=teacher_id).values())
         if isinstance(queryset, list):
             for teacher in queryset:
                 subjects = Subject.objects.filter(teacher=teacher['id'])
                 teacher['subjects'] = subjects.values('name')
 
         return queryset
+
+    def getTeacherByFilter(self, filter, filterType):
+        queryset = '';
+        if filterType == 'first_name' and filter:
+            queryset = list(Teacher.objects.filter(first_name__contains=filter).values())
+        elif filterType == 'last_name' and filter:
+            queryset = list(Teacher.objects.filter(last_name__contains=filter).values())
+        elif filterType == 'subject' and filter:
+            queryset = list(Teacher.objects.filter(subject_id__name__contains=filter).values())
+        if isinstance(queryset, list):
+            for teacher in queryset:
+                subjects = Subject.objects.filter(teacher=teacher['id'])
+                teacher['subjects'] = subjects.values('name')
+
+        return queryset
+
 
 
 
@@ -53,7 +69,9 @@ class Teacher(models.Model):
     def __str__(self):
         array = {
             "first_name": self.first_name,
-            "last_name": self.last_name
+            "last_name": self.last_name,
+            "rate_avg": self.rate_avg,
+            'college_id': self.college_id,
         }
         return json.dumps(array)
 

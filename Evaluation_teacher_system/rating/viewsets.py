@@ -19,7 +19,6 @@ class CreateRatingViewSet(viewsets.ModelViewSet):  # handles POSTs
         rating = serializer.save()
         return Response({
             "rating": serializer.data,
-
         }, status=status.HTTP_201_CREATED)
 
 
@@ -31,7 +30,7 @@ class ListRatingViewSet(viewsets.ModelViewSet):
     def list(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        obj_per_page = 5;
+        obj_per_page = 6;
         teacher_id = request.GET.get('teacher_id')
         paginator = Paginator(serializer.list(teacher_id), obj_per_page)
         page_number = request.GET.get('page')
@@ -40,6 +39,7 @@ class ListRatingViewSet(viewsets.ModelViewSet):
         if int(page_number) <= int(paginator.num_pages):
             return Response({
                 "ratings_list": page_obj.object_list,
+                "page_count": paginator.num_pages
 
             }, status=status.HTTP_201_CREATED)
         else:

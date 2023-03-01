@@ -1,4 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
+from django.http import JsonResponse
 
 from Evaluation_teacher_system.teacher.models import Teacher
 from rest_framework import serializers
@@ -30,9 +32,13 @@ class ListTeacherSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = []
 
-    def list(self):
+    def list(self, filterType, filter):
         try:
-            teachers_list = Teacher.objects.get_all_objects()
+            if filter:
+                teachers_list = Teacher.objects.getTeacherByFilter(filter, filterType)
+            else:
+                teachers_list = Teacher.objects.get_all_objects()
+
         except ObjectDoesNotExist:
             return []
         return teachers_list

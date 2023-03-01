@@ -34,15 +34,16 @@ class ListTeacherViewSet(viewsets.ModelViewSet):
     def list(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        obj_per_page = 10
-        paginator = Paginator(serializer.list(), obj_per_page)
+        filter = request.GET.get('filter')
+        filterType = request.GET.get('filterType')
+        obj_per_page = 6
+        paginator = Paginator(serializer.list(filterType, filter), obj_per_page)
         page_number = request.GET.get('page')
         page_obj = paginator.get_page(page_number)
-
         if int(page_number) <= int(paginator.num_pages):
             return Response({
                 "teachers_list": page_obj.object_list,
-
+                "page_count": paginator.num_pages
             }, status=status.HTTP_201_CREATED)
         else:
             return Response({
