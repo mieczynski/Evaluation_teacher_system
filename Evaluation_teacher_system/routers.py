@@ -1,6 +1,7 @@
 from django.urls import path
 from rest_framework.routers import SimpleRouter
 
+from Evaluation_teacher_system.application.viewsets import CreateApplicationViewSet
 from Evaluation_teacher_system.rating.viewsets import CreateRatingViewSet, ListRatingViewSet
 from Evaluation_teacher_system.user.viewsets import UserViewSet
 from Evaluation_teacher_system.college.viewsets import CreateCollegeViewSet, ListCollegeViewSet
@@ -38,6 +39,10 @@ routes.register(r'subject/list', ListSubjectViewSet, basename='subject-list')
 
 routes.register(r'rating/create', CreateRatingViewSet, basename='rating-create')
 routes.register(r'rating/list', ListRatingViewSet, basename='rating-list')
+
+# APPLICATION
+
+routes.register(r'application/create', CreateApplicationViewSet, basename='application-create')
 
 urlpatterns = [
     *routes.urls,

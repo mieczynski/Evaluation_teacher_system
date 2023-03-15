@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'Evaluation_teacher_system.subject',
     'Evaluation_teacher_system.teacher',
     'Evaluation_teacher_system.rating',
+    'Evaluation_teacher_system.application',
 
 ]
 
