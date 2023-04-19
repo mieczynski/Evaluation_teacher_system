@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'Evaluation_teacher_system.teacher',
     'Evaluation_teacher_system.rating',
     'Evaluation_teacher_system.application',
+    'rest_framework_simplejwt.token_blacklist'
 
 ]
 

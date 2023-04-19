@@ -10,11 +10,10 @@ from Evaluation_teacher_system.college.models import College
 
 class TeacherManager(models.Manager):
 
-    def create_teacher(self, first_name, last_name, teacher_id, college_id, subject_id):
+    def create_teacher(self, first_name, last_name,  college_id, subject_id):
         collage = College.objects.get(id=college_id)
         subject = Subject.objects.get(id=subject_id)
-        teacher = Teacher(first_name=first_name, last_name=last_name, teacher_id=teacher_id,
-                          collage=collage)
+        teacher = Teacher(first_name=first_name, last_name=last_name, collage=collage)
         teacher.save(using=self._db)
         teacher.subject_id.add(subject)
 
@@ -60,7 +59,6 @@ class Teacher(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     rate_avg = models.FloatField(max_length=2, default=0)
-    teacher_id = models.CharField(max_length=6, null=False, unique=True)
     college = models.ForeignKey(College, on_delete=models.CASCADE, null=False)
     subject_id = models.ManyToManyField(Subject)
 

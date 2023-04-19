@@ -25,7 +25,6 @@ class ListCollegeSerializer(serializers.ModelSerializer):
         model = College
         fields = []
 
-
     def list(self):
         try:
             colleges_list = College.objects.get_all_objects()

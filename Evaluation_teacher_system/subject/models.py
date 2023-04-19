@@ -3,6 +3,7 @@ from django.forms import model_to_dict
 from django.db import models
 
 
+
 class SubjectManager(models.Manager):
 
     def create_subject(self, name):
@@ -22,7 +23,13 @@ class SubjectManager(models.Manager):
 
         return data
 
-
+    def check_if_exist(self, name):
+        subject, created = Subject.objects.get_or_create(name=name)
+        if not created:
+            return subject
+        else:
+            subject.save(using=self._db)
+            return subject
 class Subject(models.Model):
     name = models.CharField(max_length=255, unique=True, null=False)
 

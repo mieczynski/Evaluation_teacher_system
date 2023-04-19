@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status, viewsets
 
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from Evaluation_teacher_system.college.serializers import CreateCollegeSerializer, ListCollegeSerializer
@@ -10,7 +10,7 @@ from Evaluation_teacher_system.college.serializers import CreateCollegeSerialize
 class CreateCollegeViewSet(viewsets.ModelViewSet):  # handles POSTs
     serializer_class = CreateCollegeSerializer
     http_method_names = ['post']
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -25,7 +25,7 @@ class CreateCollegeViewSet(viewsets.ModelViewSet):  # handles POSTs
 class ListCollegeViewSet(viewsets.ModelViewSet):
     serializer_class = ListCollegeSerializer
     http_method_names = ['get']
-    permission_classes = (AllowAny,)
+    permission_classes = [AllowAny]
 
     def list(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -34,3 +34,4 @@ class ListCollegeViewSet(viewsets.ModelViewSet):
             "colleges_list": serializer.list(),
 
         }, status=status.HTTP_201_CREATED)
+

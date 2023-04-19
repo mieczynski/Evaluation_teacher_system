@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status, viewsets
 
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from Evaluation_teacher_system.subject.serializers import CreateSubjectSerializer, ListSubjectSerializer
@@ -10,7 +10,7 @@ from Evaluation_teacher_system.subject.serializers import CreateSubjectSerialize
 class CreateSubjectViewSet(viewsets.ModelViewSet):  # handles POSTs
     serializer_class = CreateSubjectSerializer
     http_method_names = ['post']
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

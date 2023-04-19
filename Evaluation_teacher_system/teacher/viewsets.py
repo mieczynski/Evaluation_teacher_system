@@ -12,7 +12,7 @@ from Evaluation_teacher_system.teacher.serializers import CreateTeacherSerialize
 class CreateTeacherViewSet(viewsets.ModelViewSet):  # handles POSTs
     serializer_class = CreateTeacherSerializer
     http_method_names = ['post']
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)

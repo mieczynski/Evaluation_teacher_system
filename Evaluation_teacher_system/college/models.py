@@ -24,6 +24,13 @@ class CollegeManager(models.Manager):
 
         return data
 
+    def check_if_exist(self, name, city):
+        college, created = College.objects.get_or_create(name=name, city=city)
+        if not created:
+            return college
+        else:
+            college.save(using=self._db)
+            return college
 
 class College(models.Model):
     city = models.CharField(max_length=255)
